@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Timesheet Entry</title>
+  <link rel="stylesheet" href="css/timesheet.css">
+</head>
+<body>
+  <header class="page-header page-header-compact">
+    <h1>Timesheet Entry</h1>
+    <p class="subtitle">Alameda County — 2-week pay periods</p>
+  </header>
+
+  <div id="load-error" class="load-error" hidden></div>
+
+  <section class="panel main-workspace" aria-label="Timesheet workspace">
+    <section class="defaults-panel" aria-label="Default hours">
+      <h2>Default hours (all weekdays)</h2>
+      <div class="defaults-grid">
+        <div class="defaults-row-time">
+          <div class="defaults-time-group">
+            <span class="defaults-time-group-label">Hours</span>
+            <div id="default-hours-pair" class="times-row"></div>
+          </div>
+          <div class="defaults-time-group field-lunch-defaults">
+            <span class="defaults-time-group-label">Lunch break</span>
+            <div id="default-lunch-pair" class="times-row"></div>
+          </div>
+        </div>
+        <div class="defaults-row-meta">
+          <div class="field">
+            <label for="default-location">Location</label>
+            <select id="default-location">
+              <option value="office">In office</option>
+              <option value="wfh">WFH</option>
+              <option value="district">In District</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="default-day-code">Day time code</label>
+            <select id="default-day-code">
+              <option value="REG">REG</option>
+              <option value="SLA">SLA</option>
+              <option value="SLS">SLS</option>
+              <option value="OTP">OTP</option>
+              <option value="JUR">JUR</option>
+              <option value="SFC">SFC</option>
+              <option value="*SC">*SC</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="defaults-actions">
+        <button type="button" id="apply-weekdays" class="btn">Apply to weekdays</button>
+        <button type="button" id="apply-all-days" class="btn">Apply to all days</button>
+        <button type="button" id="clear-overrides" class="btn btn-secondary">Clear day overrides</button>
+      </div>
+    </section>
+
+    <div class="two-column-layout" id="main-layout">
+      <div class="column-preview">
+        <h2>Preview</h2>
+        <p class="hint hint-tight">Updates automatically as you edit.</p>
+        <div class="preview-scroll">
+          <table class="timesheet-preview" id="preview-table">
+            <tbody id="preview-body"></tbody>
+          </table>
+        </div>
+
+        <div class="column-block column-actions">
+          <h3 class="column-block-title">Send &amp; export</h3>
+          <div class="action-buttons">
+            <button type="button" id="btn-email" class="btn btn-primary">Email timesheet</button>
+            <button type="button" id="btn-copy-html" class="btn">Copy table for email</button>
+            <button type="button" id="btn-csv" class="btn">Download CSV</button>
+            <button type="button" id="btn-html" class="btn">Download HTML</button>
+            <button type="button" id="btn-md" class="btn">Download Markdown</button>
+            <button type="button" id="btn-xlsx" class="btn">Download XLSX</button>
+          </div>
+        </div>
+
+        <div class="column-block column-settings">
+          <h3 class="column-block-title">Settings</h3>
+          <div class="settings-grid settings-grid-compact">
+            <div class="field field-pay-period">
+              <label for="pay-period-select">Pay period</label>
+              <select id="pay-period-select"></select>
+            </div>
+            <div class="settings-row-names">
+              <div class="field">
+                <label for="manager-email">Manager email</label>
+                <div class="input-with-btn">
+                  <input type="email" id="manager-email" placeholder="mona.barra-gibson@acgov.org" autocomplete="email">
+                  <button type="button" id="save-manager-email" class="btn-small">Save default</button>
+                </div>
+              </div>
+              <div class="field">
+                <label for="employee-name">Your name</label>
+                <div class="input-with-btn">
+                  <input type="text" id="employee-name" placeholder="Maurice Wright" autocomplete="name">
+                  <button type="button" id="save-employee-name" class="btn-small">Save</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <p id="period-meta" class="period-meta period-meta-tight"></p>
+          <div class="field field-notes">
+            <label for="general-notes">General notes</label>
+            <textarea id="general-notes" rows="2" placeholder="Notes for your manager (included in email)"></textarea>
+          </div>
+          <p class="mailto-note mailto-note-tight">Email uses plain text; use <strong>Copy table</strong> for rich formatting. Exports include all 14 days.</p>
+        </div>
+      </div>
+
+      <div class="column-days" id="column-days">
+        <h2 class="daily-entries-title">Daily entries</h2>
+        <div class="daily-entries-toggles">
+          <label class="toggle-label">
+            <input type="checkbox" id="toggle-show-weeks">
+            Show Pay Period Inputs
+          </label>
+          <div id="weekends-toggle-wrap" class="weekends-toggle-wrap" hidden>
+            <label class="toggle-label" title="Shows or hides weekend cards in Daily entries only. Preview and exports always include all 14 days.">
+              <input type="checkbox" id="toggle-show-weekends">
+              Show weekend day cards
+            </label>
+          </div>
+        </div>
+        <div id="pay-period-weeks" class="pay-period-weeks">
+          <p class="hint week-hint">Week 1 (days 1–7)</p>
+          <div class="week-row" id="week1-editors"></div>
+          <p class="hint week-hint">Week 2 (days 8–14)</p>
+          <div class="week-row" id="week2-editors"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
+  <script src="js/pay-period.js"></script>
+  <script src="js/calculator.js"></script>
+  <script src="js/time-select.js"></script>
+  <script src="js/export.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

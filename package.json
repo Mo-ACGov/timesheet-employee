@@ -1,0 +1,12 @@
+{
+  "name": "timesheet-employee",
+  "private": true,
+  "scripts": {
+    "start": "serve . -l 3456",
+    "test": "node tests/run-tests.mjs"
+  },
+  "devDependencies": {
+    "playwright": "^1.49.1",
+    "serve": "^14.2.4"
+  }
+}

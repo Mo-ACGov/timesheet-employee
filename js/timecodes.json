@@ -1,0 +1,47 @@
+{
+  "featured": ["REG", "SLA", "SLS", "OTP", "JUR"],
+  "codes": [
+    {
+      "code": "REG",
+      "description": "Regular Hours",
+      "category": "Worked Time",
+      "notes": "Standard hours worked during your scheduled assignment."
+    },
+    {
+      "code": "OTP",
+      "description": "Overtime",
+      "category": "Worked Time",
+      "notes": "Approved overtime hours worked beyond your regular schedule."
+    },
+    {
+      "code": "SLA",
+      "description": "Sick Leave – Medical Appointment (Self)",
+      "category": "Paid Leave",
+      "notes": "For your own medical, dental, vision, therapy, or healthcare appointments."
+    },
+    {
+      "code": "SLS",
+      "description": "Sick Leave – Self Illness / Disability",
+      "category": "Paid Leave",
+      "notes": "For your own illness, injury, recovery, or disability-related absence."
+    },
+    {
+      "code": "SFC",
+      "description": "Sick Leave – Family (Combined)",
+      "category": "Paid Leave",
+      "notes": "For qualifying family care under Alameda County sick leave policies."
+    },
+    {
+      "code": "JUR",
+      "description": "Jury Duty",
+      "category": "Paid Leave",
+      "notes": "For approved jury service while assigned and scheduled to work."
+    },
+    {
+      "code": "*SC",
+      "description": "Schedule Change Code",
+      "category": "Administrative",
+      "notes": "Enter 0.10 hours when a County holiday falls on the first Monday of a pay period, or when you do not work on the first Monday of a pay period."
+    }
+  ]
+}
