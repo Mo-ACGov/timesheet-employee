@@ -57,6 +57,8 @@
     };
   }
 
+  const LEGACY_DEFAULT_MANAGER_EMAIL = "mona.barra-gibson@acgov.org";
+
   function defaultState() {
     return {
       managerEmail: "",
@@ -73,7 +75,11 @@
       const name = localStorage.getItem(STORAGE_KEYS.employeeName);
       const defs = localStorage.getItem(STORAGE_KEYS.defaults);
       const views = localStorage.getItem(STORAGE_KEYS.viewPrefs);
-      if (email) state.managerEmail = email;
+      if (email === LEGACY_DEFAULT_MANAGER_EMAIL) {
+        localStorage.removeItem(STORAGE_KEYS.managerEmail);
+      } else if (email) {
+        state.managerEmail = email;
+      }
       if (name) state.employeeName = name;
       if (views) uiPrefs = { ...DEFAULT_VIEW_PREFS, ...JSON.parse(views) };
       if (defs) {
