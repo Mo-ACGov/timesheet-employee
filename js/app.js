@@ -59,7 +59,7 @@
 
   function defaultState() {
     return {
-      managerEmail: "mona.barra-gibson@acgov.org",
+      managerEmail: "",
       employeeName: "Maurice Wright",
       generalNotes: "",
       defaults: defaultDefaults(),
